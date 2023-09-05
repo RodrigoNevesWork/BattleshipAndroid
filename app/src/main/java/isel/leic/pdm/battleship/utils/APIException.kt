@@ -1,0 +1,27 @@
+package isel.leic.pdm.battleship.utils
+
+abstract class APIException(val message: String, val status: Int)
+
+class UserAlreadyExists: APIException("User Already Exists", 409)
+class UserNotFound: APIException("User Not Found", 404)
+class InvalidUserParameters: APIException("Invalid User Parameters", 404)
+class PlayerNotFound: APIException("Player Not Found", 404)
+class InsecurePassword: APIException("Insecure Password", 400)
+class PasswordInvalid: APIException("Password Invalid", 400)
+class CredentialsInvalid: APIException("Invalid Credentials", 400)
+class Unauthenticated: APIException("Unauthenticated", 401)
+class Unauthorized: APIException("Unauthorized", 403)
+class TokenError: APIException("Token Error", 400)
+class TokenInvalid: APIException("Token Invalid", 400)
+class GameNotFound: APIException("Game Not Found",404)
+class GameAlreadyStarted: APIException("Game Already Started", 409)
+class InvalidGameParameters: APIException("Invalid Game Parameters", 400)
+class GameRuleNotAllowed: APIException("Game Rules Not Allowed", 404)
+class FleetCompositionNotFound: APIException("Fleet Composition Not Found", 404)
+class InvalidLobbyParameters: APIException("Bad Lobby Syntax", 400)
+class LobbyJoinError: APIException("Join Lobby Error", 400)
+class NotAllShipsWerePlaced: APIException("Not All Ships Were Placed", 400)
+class SamePlayer(playerId: Int): APIException("You are already in this lobby as player $playerId", 400)
+class LobbyNotFound: APIException("Requested lobby was not found", 404)
+class NotYetImplemented: APIException("Path has not been implemented yet", 500)
+

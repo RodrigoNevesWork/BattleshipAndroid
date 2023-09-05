@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="start_game_button_text">Jogar</string>
+    <string name="activity_info_no_suitable_app">Não foi encontrada nenhuma aplicação para o envio de um email.</string>
+    <string name="user_screen_title">Iniciar Sessão</string>
+    <string name="user_screen_nickname_tip">A sua alcunha</string>
+    <string name="user_screen_moto_tip">O teu moto</string>
+    <string name="game_screen_local_player_turn">É o seu turno</string>
+    <string name="game_screen_enemy_player_turn">É o turno do seu inimigo</string>
+    <string name="user_screen_password_tip">A sua password</string>
+    <string name="user_game_rule_choice">Escolha as regras da sua preferência</string>
+    <string name="user_game_rule_placeholder">Escolha as suas regras</string>
+    <string name="game_screen_local_player_won">Você Ganhou!</string>
+    <string name="game_screen_enemy_player_won">Você Perdeu.</string>
+    <string name="player_won_points">"Pontos ganhos: "</string>
+    <string name="player_lost_points">"Pontos perdidos: "</string>
+    <string name="game_forfeit">Desistir</string>
+    <string name="game_end_button">Acabar</string>
+    <string name="game_setup_rotate_ship">Rodar</string>
+    <string name="game_setup_place_ship">Pôr</string>
+    <string name="game_setup_ship_name">Navio:</string>
+    <string name="game_setup_ship_size">Tamanho:</string>
+    <string name="game_play_time">Tempo de jogo:</string>
+    <string name="game_setup_time">Tempo de preparação:</string>
+
+    <string name="waiting_lobby_dialog_title">À espera de um jogador…</string>
+
+    <string name="starting_game_dialog_title">O jogo está a começar</string>
+    <string name="starting_game_dialog_text">À espera de um oponente se junte</string>
+    <string name="starting_game_cancel_button">Cancelar</string>
+
+    <string name="game_ended_dialog_title">O jogo acabou</string>
+    <string name="game_ended_dialog_text_local_won">Parabéns, ganhaste!</string>
+    <string name="game_ended_dialog_text_opponent_won">O teu oponente ganhou</string>
+    <string name="game_ended_ok_button">OK</string>
+
+    <string name="error_api_title">Erro ao aceder ao server</string>
+    <string name="error_retry_button_text">Tente novamente</string>
+    <string name="error_exit_button_text">Saída</string>
+    <string name="error_unknown_api_response">Por favor, verifique se a aplicação está atualizada</string>
+    <string name="error_could_not_reach_api">Por favor, verifique se o dispositivo está conectado à internet</string>
+    <string name="main_play_button">Jogar</string>
+    <string name="user_username">Nome de Utilizador:</string>
+    <string name="user_games_played">Jogos Jogados:</string>
+    <string name="user_points">Pontos:</string>
+    <string name="ranking_me_button">Eu</string>
+    <string name="ranking_search_placeholder">Pesquisar…</string>
+    <string name="ranking">Classificações</string>
+    <string name="ranking_rank">Classificação</string>
+    <string name="ranking_name">Nome</string>
+    <string name="ranking_search_results">Resultados da Pesquisa</string>
+    <string name="ranking_points">Pontos</string>
+    <string name="ranking_back_button">Voltar</string>
+    <string name="lobby_creation">A criar Sala…</string>
+    <string name="game_not_started">O jogo está a começar…</string>
+    <string name="game_loading">O jogo está a ser preparado…</string>
+    <string name="game_wating">Aguardando pelo jogador inimigo…</string>
+
+</resources>

@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name" translatable="false">Battleship</string>
+    <string name="start_game_button_text">Play</string>
+    <string name="activity_info_no_suitable_app">No App found for sending an email.</string>
+    <string name="user_screen_title">Log In</string>
+    <string name="user_screen_nickname_tip">Your nickname</string>
+    <string name="user_screen_moto_tip">Your moto</string>
+    <string name="game_screen_local_player_turn">Its your turn</string>
+    <string name="game_screen_enemy_player_turn">Its your enemy\'s turn</string>
+    <string name="user_screen_password_tip">Your password</string>
+    <string name="user_shared_preferences_file" translatable="false">isel.leic.pdm.battleship.user_info</string>
+    <string name="user_game_rule_choice">Choose the rules of your preference</string>
+    <string name="user_game_rule_placeholder">Choose preferred rules</string>
+    <string name="game_screen_local_player_won">You won!</string>
+    <string name="game_screen_enemy_player_won">You lost.</string>
+    <string name="player_won_points">"Points awarded: "</string>
+    <string name="player_lost_points">"Points lost: "</string>
+    <string name="game_forfeit">Forfeit</string>
+    <string name="game_end_button">End</string>
+    <string name="game_setup_rotate_ship">Rotate</string>
+    <string name="game_setup_place_ship">Place</string>
+    <string name="game_setup_ship_name">Ship:</string>
+    <string name="game_setup_ship_size">Size:</string>
+    <string name="game_play_time">Play time:</string>
+    <string name="gamerule_shared_preferences_file" translatable="false">isel.leic.pdm.battleship.game_rule</string>
+    <string name="game_setup_time">Setup Time:</string>
+
+    <string name="waiting_lobby_dialog_title">Waiting for player…</string>
+
+    <string name="starting_game_dialog_title">Game is starting</string>
+    <string name="starting_game_dialog_text">Waiting for opponent to join</string>
+    <string name="starting_game_cancel_button">Cancel</string>
+
+    <string name="game_ended_dialog_title">Game ended</string>
+    <string name="game_ended_dialog_text_local_won">Congratulations, you won!</string>
+    <string name="game_ended_dialog_text_opponent_won">Your opponent has won.</string>
+    <string name="game_ended_ok_button">OK</string>
+
+    <string name="error_api_title">Error accessing the server</string>
+    <string name="error_retry_button_text">Retry</string>
+    <string name="error_exit_button_text">Exit</string>
+    <string name="error_unknown_api_response">Please ensure the application is updated</string>
+    <string name="error_could_not_reach_api">Please check if the device is connected to the internet</string>
+    <string name="main_play_button">Play</string>
+    <string name="user_username">Username:</string>
+    <string name="user_points">Points:</string>
+    <string name="user_games_played">Games Played:</string>
+    <string name="ranking_me_button">Me</string>
+    <string name="ranking_search_placeholder">Search…</string>
+    <string name="ranking">Ranking</string>
+    <string name="ranking_rank">Rank</string>
+    <string name="ranking_name">Name</string>
+    <string name="ranking_search_results">Search Results</string>
+    <string name="ranking_points">Points</string>
+    <string name="ranking_back_button">Back</string>
+    <string name="lobby_creation">Creating Lobby…</string>
+    <string name="game_not_started">Game is starting…</string>
+    <string name="game_loading">Game is loading…</string>
+    <string name="game_wating">Waiting for other player…</string>
+</resources>

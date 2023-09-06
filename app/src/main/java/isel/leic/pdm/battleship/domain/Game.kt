@@ -8,6 +8,7 @@ import isel.leic.pdm.battleship.domain.board.isMissShot
 import isel.leic.pdm.battleship.domain.board.positionsAvailable
 import isel.leic.pdm.battleship.domain.ship.Direction
 import isel.leic.pdm.battleship.domain.ship.FleetComposition
+import isel.leic.pdm.battleship.services.sse.models.SseEvent
 import kotlinx.parcelize.Parcelize
 
 
@@ -26,7 +27,7 @@ class Game(
     val playerA: Player = Player(),
     val playerB: Player = Player(),
     val gameRule: GameRule = GameRule(),
-) : Parcelable {
+) : Parcelable, SseEvent() {
 
     enum class State {
         GAME_SETUP,

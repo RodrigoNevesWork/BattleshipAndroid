@@ -16,7 +16,7 @@ import isel.leic.pdm.battleship.R
 import isel.leic.pdm.battleship.activities.board.BoardBuilder
 import isel.leic.pdm.battleship.domain.*
 import isel.leic.pdm.battleship.http.model.ShotInputModel
-import isel.leic.pdm.battleship.http.model.UserCredentialsOutputModel
+import isel.leic.pdm.battleship.http.model.UserInfoOutputModel
 import isel.leic.pdm.battleship.ui.Background
 import isel.leic.pdm.battleship.ui.TopBar
 import isel.leic.pdm.battleship.ui.theme.BattleshipTheme
@@ -28,9 +28,10 @@ data class GameScreenState(
 
 @Composable
 fun GameScreen(
-    userInfo: UserCredentialsOutputModel,
+    userInfo: UserInfoOutputModel,
     game: GameScreenState = GameScreenState(null),
     onShot: (gameId: Int, shot: ShotInputModel) -> Unit = { gameId, shot -> },
+    timeToShoot: Int,
     onBackRequested: () -> Unit = { },
     onForfeitRequested: () -> Unit = { },
     toEndActivity: (isLocalPlayerVictorious: Boolean) -> Unit = { }
@@ -63,15 +64,9 @@ fun GameScreen(
                         )
                     } else {
                         val theGame = game.game
-                        var time by remember { mutableStateOf(theGame.gameRule.timeToShoot) }
-
-                        CountDownTimer(
-                            time = time,
-                            subTime = { time-- },
-                            end = { toEndActivity(theGame.state != Game.State.PLAYER_A_TURN) })
 
                         Text(
-                            text = stringResource(id = R.string.game_play_time) + " " + time,
+                            text = stringResource(id = R.string.game_play_time) + " " + timeToShoot,
                             style = MaterialTheme.typography.h2,
                             textAlign = TextAlign.Center,
                             color = MaterialTheme.colors.primary

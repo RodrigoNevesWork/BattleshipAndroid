@@ -137,7 +137,7 @@ class GameService(
             awaitClose()
         }
 
-    override suspend fun forfeit(forfeitModel: ForfeitInputModel): Flow<ForfeitOutputModel> =
+    override suspend fun forfeit(forfeitModel: ForfeitInputModel): Flow<Game> =
         callbackFlow {
             val request = requestPostBuilder(
                 url = getURLtoFetchAPI(Uri.FORFEIT),
@@ -147,7 +147,7 @@ class GameService(
             try {
                 val response = request.send(httpClient).check()
                 trySend((response.extractProperties(
-                    ForfeitOutputModelType.type) as SirenEntity<ForfeitOutputModel>).properties!!
+                    GameModelType.type) as SirenEntity<Game>).properties!!
                 )
             } catch(e: Exception) {
                 close(e)

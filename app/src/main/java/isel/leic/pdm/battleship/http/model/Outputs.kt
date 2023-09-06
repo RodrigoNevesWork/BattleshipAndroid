@@ -3,6 +3,7 @@ package isel.leic.pdm.battleship.http.model
 import android.os.Parcelable
 import isel.leic.pdm.battleship.domain.Game
 import isel.leic.pdm.battleship.domain.board.Square
+import isel.leic.pdm.battleship.services.sse.models.SseEvent
 import isel.leic.pdm.battleship.utils.SirenEntity
 import kotlinx.parcelize.Parcelize
 
@@ -39,13 +40,13 @@ class UserOutputModel(
 val UserOutputModelType = SirenEntity.getType<UserOutputModel>()
 
 
-data class UserCredentialsOutputModel(
+data class UserInfoOutputModel(
     val id: Int,
     val username: String,
     val token: String
-)
+): SseEvent()
 
-val UserCredentialsOutputModelType = SirenEntity.getType<UserCredentialsOutputModel>()
+val UserInfoOutputModelType = SirenEntity.getType<UserInfoOutputModel>()
 
 data class MatchmakerOutputModel(
     val created: Boolean,
@@ -89,7 +90,7 @@ data class ShipOutputModel(
 )
 
 data class PlaceShipOutputModel(
-    val placed: Boolean
+    val otherPlaced: Boolean
 )
 
 val PlaceShipOutputModelType = SirenEntity.getType<PlaceShipOutputModel>()

@@ -19,7 +19,7 @@ import isel.leic.pdm.battleship.domain.board.coordinates.Coordinates
 import isel.leic.pdm.battleship.domain.board.coordinates.Row
 import isel.leic.pdm.battleship.domain.ship.Direction
 import isel.leic.pdm.battleship.http.model.PlaceShipInputModel
-import isel.leic.pdm.battleship.http.model.UserCredentialsOutputModel
+import isel.leic.pdm.battleship.http.model.UserInfoOutputModel
 import isel.leic.pdm.battleship.http.model.toPlaceShipInputModel
 import isel.leic.pdm.battleship.ui.Background
 import isel.leic.pdm.battleship.ui.TopBar
@@ -34,7 +34,7 @@ data class GameSetupScreenState(
 // TODO: Solve issue with composition happening as the navigation happens
 @Composable
 fun GameSetupScreen(
-    userInfo: UserCredentialsOutputModel,
+    userInfo: UserInfoOutputModel,
     game: GameSetupScreenState = GameSetupScreenState(),
     onPlaceShips: (ships: List<PlaceShipInputModel>) -> Unit = { },
     onBackRequested: () -> Unit = { },
@@ -143,22 +143,4 @@ fun GameSetupScreen(
         }
     }
 }
-/*
-@RequiresApi(Build.VERSION_CODES.O)
-@Preview(showBackground = true)
-@Composable
-fun GameSetupPreview() {
-    GameSetupScreen(
-        userInfo = UserCredentialsOutputModel(0, "", ""),
-        game = GameSetupScreenState(
-            startGame(
-                name = "Test",
-                playerA = Player(1, Instant.ofEpochSecond(20), 1, Board(10)),
-                playerB = Player(2, Instant.ofEpochSecond(20), 2, Board(10)),
-                gameRule = GameRule(1, 10, 1, 20, 20, listOf(FleetComposition(1, "Destroyer", 2, 2)))
-            )
-        )
-    )
-}
 
- */

@@ -22,7 +22,7 @@ class UserService(
 
     private fun extendUrlUserWithId(userId: Int ) = getURLtoFetchAPI("${Uri.USER}/$userId")
 
-    override suspend fun login(userInfo: UserInfo): UserCredentialsOutputModel {
+    override suspend fun login(userInfo: UserInfo): UserInfoOutputModel {
         val request = requestPostBuilder(
             url = getURLtoFetchAPI(Uri.LOGIN),
             body = userInfo
@@ -30,7 +30,7 @@ class UserService(
         try {
             val response = request.send(httpClient).check()
             return (response.extractProperties(
-                UserCredentialsOutputModelType.type) as SirenEntity<UserCredentialsOutputModel>).properties!!.also {
+                UserInfoOutputModelType.type) as SirenEntity<UserInfoOutputModel>).properties!!.also {
                     credentials -> UserCredentialsEncryptedSharedPreferences(context).userInfo = credentials
             }
         } catch (e: Exception) {

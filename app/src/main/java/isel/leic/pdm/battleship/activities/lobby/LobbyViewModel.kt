@@ -5,8 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import isel.leic.pdm.battleship.domain.Game
 import isel.leic.pdm.battleship.http.model.*
 import isel.leic.pdm.battleship.services.GameServiceInterface
+import isel.leic.pdm.battleship.services.sse.EventBus
+import isel.leic.pdm.battleship.services.sse.SseEventListener
+import isel.leic.pdm.battleship.services.sse.models.SseEvent
 import isel.leic.pdm.battleship.utils.ProblemJson
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +24,7 @@ enum class GameState { IDLE, STARTING, STARTED }
 
 class LobbyViewModel(
     private val gameService: GameServiceInterface
-): ViewModel() {
+): ViewModel(), SseEventListener {
 
     private val _lobby = MutableStateFlow(MatchmakerOutputModel(false, 0))
     val lobby = _lobby.asStateFlow()
@@ -79,4 +83,20 @@ class LobbyViewModel(
                 if (e is ProblemJson) _error = e
             }
         }
+
+    init {
+        EventBus.registerListener(this)
+    }
+
+    override fun onCleared() {
+        EventBus.unregisterListener(this)
+        super.onCleared()
+    }
+
+    override fun onEventReceived(eventData: SseEvent) {
+        if (eventData is Game && state == GameState.STARTING) {
+            _gameId.value = GameIdOutputModel(eventData.id)
+            if (eventData.id != 0) _state = GameState.STARTED
+        }
+    }
 }

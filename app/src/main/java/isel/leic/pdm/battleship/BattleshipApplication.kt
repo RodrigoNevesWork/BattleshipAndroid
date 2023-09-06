@@ -8,6 +8,7 @@ import isel.leic.pdm.battleship.services.GameService
 import isel.leic.pdm.battleship.services.GameServiceInterface
 import isel.leic.pdm.battleship.services.UserService
 import isel.leic.pdm.battleship.services.UserServiceInterface
+import isel.leic.pdm.battleship.services.sse.SseService
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import java.net.URL
@@ -21,9 +22,8 @@ const val TAG = "BattleshipApp"
 interface DependenciesContainer {
     val userService: UserServiceInterface
     val gameService: GameServiceInterface
+    val sseService: SseService
 }
-
-private val battleshipAPI_URL = URL("http://localhost:8080")
 
 class BattleshipApplication: DependenciesContainer, Application() {
 
@@ -47,6 +47,12 @@ class BattleshipApplication: DependenciesContainer, Application() {
         get() = GameService(
             httpClient = httpClient,
             context = this,
+            jsonEncoder = jsonEncoder
+        )
+
+    override val sseService: SseService
+        get() = SseService(
+            httpClient = httpClient,
             jsonEncoder = jsonEncoder
         )
 }

@@ -6,6 +6,8 @@ object Uri {
     const val USER = "/user"
     const val GAME = "/game"
 
+    const val SUBSCRIBE = "/subscribe"
+
     // ----------- USER -----------
     const val LOGIN = "$USER/login"
     const val USER_RANKING = "$USER/ranking"

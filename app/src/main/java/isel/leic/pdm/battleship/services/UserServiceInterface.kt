@@ -5,7 +5,7 @@ import isel.leic.pdm.battleship.preferences.UserInfo
 import kotlinx.coroutines.flow.Flow
 
 interface UserServiceInterface {
-    suspend fun login(userInfo: UserInfo): UserCredentialsOutputModel
+    suspend fun login(userInfo: UserInfo): UserInfoOutputModel
 
     suspend fun getUser(userId : Int): UserOutputModel
 

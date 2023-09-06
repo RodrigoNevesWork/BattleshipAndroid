@@ -6,17 +6,19 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import isel.leic.pdm.battleship.DependenciesContainer
-import isel.leic.pdm.battleship.activities.main.BattleshipActivity
+import isel.leic.pdm.battleship.preferences.UserCredentialsEncryptedSharedPreferences
 import isel.leic.pdm.battleship.utils.CheckProblemJson
 import isel.leic.pdm.battleship.utils.viewModelInit
+import kotlinx.coroutines.launch
 
 class UserInfoActivity: ComponentActivity() {
 
     private val viewModel by viewModels<UserLoginViewModel> {
         viewModelInit {
             val app = (application as DependenciesContainer)
-            UserLoginViewModel(app.userService)
+            UserLoginViewModel(app.sseService, UserCredentialsEncryptedSharedPreferences(this))
         }
     }
 
@@ -36,11 +38,18 @@ class UserInfoActivity: ComponentActivity() {
             UserInfoScreen(
                 onSaveRequest = {
                     viewModel.tryCreation(userInfo = it)
-                    finish()
                 },
                 onBackRequest = { finish() },
             )
+
+
             CheckProblemJson(error = viewModel.error)
+        }
+
+        lifecycleScope.launch {
+            viewModel.creationResult.collect {
+                if (it) finish()
+            }
         }
     }
 }

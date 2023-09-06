@@ -5,11 +5,17 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import com.google.gson.Gson
 import isel.leic.pdm.battleship.activities.about.AboutActivity
 import isel.leic.pdm.battleship.activities.lobby.LobbyActivity
 import isel.leic.pdm.battleship.activities.ranking.RankingActivity
 import isel.leic.pdm.battleship.activities.rule.preferences.GameRuleSelectActivity
 import isel.leic.pdm.battleship.activities.user.UserInfoActivity
+import isel.leic.pdm.battleship.preferences.UserCredentialsEncryptedSharedPreferences
+import isel.leic.pdm.battleship.preferences.UserInfo
+import isel.leic.pdm.battleship.services.sse.SseService
+import okhttp3.OkHttpClient
+import java.util.concurrent.TimeUnit
 
 class BattleshipActivity : ComponentActivity() {
     companion object {
@@ -23,6 +29,18 @@ class BattleshipActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        UserCredentialsEncryptedSharedPreferences(this).userInfo?.let {
+            SseService(
+                OkHttpClient.Builder()
+                    .connectTimeout(0, TimeUnit.MINUTES)
+                    .writeTimeout(0, TimeUnit.MINUTES)
+                    .readTimeout(0, TimeUnit.MINUTES)
+                    .build(),
+                Gson()
+            ).start(it.token)
+        }
+
         setContent {
             BattleshipScreen(
                 onAboutRequest = ::showAbout,

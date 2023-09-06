@@ -19,7 +19,7 @@
         <activity
             android:name=".activities.main.BattleshipActivity"
             android:exported="true"
-            android:screenOrientation="sensorPortrait"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Battleship">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,14 +32,46 @@
                 android:value="" />
         </activity>
 
-        <activity android:name=".activities.about.AboutActivity" />
-        <activity android:name=".activities.user.UserInfoActivity" />
-        <activity android:name=".activities.ranking.RankingActivity" />
-        <activity android:name=".activities.lobby.LobbyActivity" />
-        <activity android:name=".activities.game.GameActivity" />
-        <activity android:name=".activities.game.GameEndActivity" />
-        <activity android:name=".activities.game.GameSetupActivity" />
-        <activity android:name=".activities.rule.preferences.GameRuleSelectActivity" />
+        <activity
+            android:name=".activities.about.AboutActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".activities.user.UserInfoActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".activities.ranking.RankingActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".activities.lobby.LobbyActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".activities.game.GameActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".activities.game.GameEndActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".activities.game.GameSetupActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".activities.rule.preferences.GameRuleSelectActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
     </application>
 
 </manifest>

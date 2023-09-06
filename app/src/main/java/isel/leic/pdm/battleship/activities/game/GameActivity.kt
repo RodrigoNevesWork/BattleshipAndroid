@@ -41,6 +41,8 @@ class GameActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel.decrementTimeToShoot()
+
         setContent {
             val currentGame = viewModel.onGoingGame.collectAsState()
             val userInfo = UserCredentialsEncryptedSharedPreferences(context = this).userInfo!!
@@ -49,13 +51,17 @@ class GameActivity: ComponentActivity() {
                 userInfo = userInfo,
                 game = GameScreenState(currentGame.value),
                 onBackRequested = { finish() },
-                onShot = { gameId, shot -> viewModel.shotShip(gameId = gameId, shot = shot) },
+                onShot = { gameId, shot ->
+                    viewModel.shotShip(gameId = gameId, shot = shot)
+                    viewModel.decrementTimeToShoot()
+                },
+                timeToShoot = viewModel.time.collectAsState().value,
                 onForfeitRequested = {
                     viewModel.forfeit(ForfeitInputModel(if(userInfo.id == currentGame.value!!.playerA.userId) currentGame.value!!.playerA.id else currentGame.value!!.playerB.id))
                     finish()
                 },
                 toEndActivity = {
-                    GameEndActivity.navigate(context = this, isLocalPlayerVictory = it)
+                    GameEndActivity.navigate(context = this, isLocalPlayerVictory = it, playerId = if(userInfo.id == currentGame.value!!.playerA.userId) currentGame.value!!.playerA.id else currentGame.value!!.playerB.id)
                     finish()
                 }
             )
@@ -64,12 +70,18 @@ class GameActivity: ComponentActivity() {
             if (currentGame.value == null || currentGame.value!!.state == Game.State.GAME_SETUP)
                 viewModel.getGame(setGameId)
 
-            if (currentGame.value != null)
-                if(
-                    (userInfo.id == currentGame.value!!.playerA.userId && currentGame.value!!.state == Game.State.PLAYER_B_TURN)
-                        ||
-                    (userInfo.id == currentGame.value!!.playerB.userId && currentGame.value!!.state == Game.State.PLAYER_A_TURN))
-                        viewModel.getGame(setGameId)
+            if (viewModel.time.collectAsState().value <= 0) {
+                GameEndActivity.navigate(
+                    context = this@GameActivity,
+                    isLocalPlayerVictory =
+                    (userInfo.id == currentGame.value!!.playerA.userId && currentGame.value?.state != Game.State.PLAYER_A_TURN)
+                            ||
+                    (userInfo.id == currentGame.value!!.playerB.userId && currentGame.value?.state != Game.State.PLAYER_B_TURN),
+                    playerId = if(userInfo.id == currentGame.value!!.playerA.userId) currentGame.value!!.playerA.id else currentGame.value!!.playerB.id
+                )
+                finish()
+            }
+
         }
 
         lifecycleScope.launch {
@@ -84,6 +96,7 @@ class GameActivity: ComponentActivity() {
                         finish()
                     }
                 }
+
             } catch(_: Exception) { }
         }
 

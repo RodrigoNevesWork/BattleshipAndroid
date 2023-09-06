@@ -9,6 +9,8 @@ import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.lifecycleScope
 import isel.leic.pdm.battleship.DependenciesContainer
+import isel.leic.pdm.battleship.activities.lobby.GameState
+import isel.leic.pdm.battleship.domain.Game
 import isel.leic.pdm.battleship.preferences.UserCredentialsEncryptedSharedPreferences
 import isel.leic.pdm.battleship.utils.CheckProblemJson
 import isel.leic.pdm.battleship.utils.viewModelInit
@@ -50,13 +52,19 @@ class GameSetupActivity: ComponentActivity() {
                 onTimeEnd = { }
             )
 
+            if (viewModel.state.collectAsState().value == GameState.STARTED && currentGame.value?.state == Game.State.PLAYER_A_TURN) {
+                GameActivity.navigate(this@GameSetupActivity, setPlayerId, setGameId)
+                finish()
+            }
+
             CheckProblemJson(error = viewModel.error)
         }
 
         lifecycleScope.launch {
             if (setGameId != 0) viewModel.getGame(setGameId)
             try {
-                viewModel.placed.collect {
+
+                viewModel.otherPlaced.collect {
                     if (it) {
                         GameActivity.navigate(this@GameSetupActivity, setPlayerId, setGameId)
                         finish()

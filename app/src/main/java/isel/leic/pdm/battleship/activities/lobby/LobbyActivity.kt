@@ -53,10 +53,6 @@ class LobbyActivity: ComponentActivity() {
             if (viewModel.state == GameState.IDLE)
                 viewModel.matchmaker(GameInputModel(gameRule = GameRuleEncryptedSharedPreferences(this).gameRule))
 
-            if (viewModel.state == GameState.STARTING) {
-                viewModel.getGameByPlayer(currentLobby.id)
-            }
-
             if (viewModel.state == GameState.STARTED) {
                 GameSetupActivity.navigate(this, currentLobby.id)
                 finish()

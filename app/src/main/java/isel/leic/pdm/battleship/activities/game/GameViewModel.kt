@@ -22,9 +22,11 @@ import kotlinx.coroutines.launch
 class GameViewModel(
     private val gameService: GameServiceInterface
 ): ViewModel(), SseEventListener {
-
+    init {
+        EventBus.registerListener(this)
+    }
     companion object {
-        private const val MAX_SHOOT_TIME = 120
+        private const val MAX_SHOOT_TIME = 20
         private const val ONE_SECOND_DELAY = 1000L
     }
 
@@ -45,7 +47,7 @@ class GameViewModel(
         get() = _winner.asStateFlow()
 
     private val _timer = MutableStateFlow<Job?>(null)
-    val timer
+    private val timer
         get() = _timer.asStateFlow()
 
     private val _time = MutableStateFlow(20)
@@ -82,7 +84,7 @@ class GameViewModel(
     fun shotShip(gameId: Int, shot: ShotInputModel): Job =
         viewModelScope.launch {
             try {
-                gameService.makePlay(gameId, shot).collect { event ->
+                gameService.makePlay(gameId, shot).collect {
                     gameService.getGameById(gameId).collect {
                         _onGoingGame.value = it
                     }
@@ -110,19 +112,26 @@ class GameViewModel(
     /**
      * After time to shoot is completed resets the timer
      */
-    fun resetTimeToShoot() {
+    private fun resetTimeToShoot() {
         _time.value = MAX_SHOOT_TIME
         timer.value?.cancel()
     }
 
-    fun forfeit(forfeitModel: ForfeitInputModel): Job =
+    fun forfeit(): Job =
         viewModelScope.launch {
-            gameService.forfeit(forfeitModel)
+            val onGoingGameValue = onGoingGame.value ?: return@launch
+
+            val turn = if(onGoingGameValue.state == Game.State.PLAYER_A_TURN) onGoingGameValue.playerA.userId else onGoingGameValue.playerB.userId
+
+            gameService.forfeit(
+                userAIDs = Pair(onGoingGameValue.playerA.userId, onGoingGameValue.playerA.id),
+                userBID = onGoingGameValue.playerB.id,
+                turn = turn
+            ).collect{
+                _onGoingGame.value = it
+            }
         }
 
-    init {
-        EventBus.registerListener(this)
-    }
 
     override fun onCleared() {
         EventBus.unregisterListener(this)

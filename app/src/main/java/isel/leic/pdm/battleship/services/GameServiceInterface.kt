@@ -18,6 +18,6 @@ interface GameServiceInterface {
 
     suspend fun getAllGameRules(): Flow<GameRules>
 
-    suspend fun forfeit(forfeitModel: ForfeitInputModel): Flow<Game>
+    suspend fun forfeit(userAIDs : Pair<Int,Int>, userBID : Int, turn : Int): Flow<Game>
 
 }

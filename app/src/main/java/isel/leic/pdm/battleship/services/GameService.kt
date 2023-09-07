@@ -137,17 +137,25 @@ class GameService(
             awaitClose()
         }
 
-    override suspend fun forfeit(forfeitModel: ForfeitInputModel): Flow<Game> =
+    override suspend fun forfeit(userAIDs: Pair<Int, Int>, userBID: Int, turn: Int): Flow<Game> =
         callbackFlow {
+
+            if(!isMyTurn(userInfo.id,turn)) awaitClose()
+
+            val forfeitModel = ForfeitInputModel(
+                if(userAIDs.first == userInfo.id) userAIDs.second else userBID
+            )
+
             val request = requestPostBuilder(
                 url = getURLtoFetchAPI(Uri.FORFEIT),
                 body = forfeitModel,
                 token = userInfo.token
             )
+
             try {
                 val response = request.send(httpClient).check()
-                trySend((response.extractProperties(
-                    GameModelType.type) as SirenEntity<Game>).properties!!
+                trySend(
+                    (response.extractProperties(GameModelType.type) as SirenEntity<Game>).properties!!
                 )
             } catch(e: Exception) {
                 close(e)
@@ -155,4 +163,6 @@ class GameService(
             }
             awaitClose()
         }
+
+    private fun isMyTurn(userID : Int, turnID : Int) : Boolean = userID == turnID
 }

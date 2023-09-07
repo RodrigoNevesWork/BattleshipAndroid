@@ -7,8 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import isel.leic.pdm.battleship.DependenciesContainer
-import isel.leic.pdm.battleship.domain.Game
-import isel.leic.pdm.battleship.http.model.ForfeitInputModel
+import isel.leic.pdm.battleship.activities.main.BattleshipActivity
 import isel.leic.pdm.battleship.utils.viewModelInit
 
 class GameEndActivity: ComponentActivity() {
@@ -37,14 +36,11 @@ class GameEndActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.forfeit(
-            ForfeitInputModel(setPlayerId)
-        )
 
         setContent {
             GameEndScreen(
                 isLocalPlayerVictorious = isLocalVictorious,
-                onEndRequested = { finish() }
+                onEndRequested = { BattleshipActivity.navigate(this) }
             )
 
             //CheckProblemJson(error = )

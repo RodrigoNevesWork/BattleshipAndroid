@@ -10,7 +10,7 @@ open class Requests(
     private val jsonEncoder: Gson
 ) {
 
-    private val URL_API = "https://c389-161-230-135-128.ngrok.io"
+    private val URL_API = "https://c995-161-230-135-128.ngrok.io"
     fun getURLtoFetchAPI(uri: String) = "$URL_API$uri"
 
     private fun <T> T.requestBodyBuilder(): RequestBody {

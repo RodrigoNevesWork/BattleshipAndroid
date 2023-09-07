@@ -31,7 +31,7 @@ data class GameSetupScreenState(
     val game: Game? = null
 )
 
-// TODO: Solve issue with composition happening as the navigation happens
+
 @Composable
 fun GameSetupScreen(
     userInfo: UserInfoOutputModel,

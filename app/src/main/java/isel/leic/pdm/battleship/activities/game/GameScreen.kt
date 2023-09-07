@@ -20,7 +20,6 @@ import isel.leic.pdm.battleship.http.model.UserInfoOutputModel
 import isel.leic.pdm.battleship.ui.Background
 import isel.leic.pdm.battleship.ui.TopBar
 import isel.leic.pdm.battleship.ui.theme.BattleshipTheme
-import isel.leic.pdm.battleship.utils.CountDownTimer
 
 data class GameScreenState(
     val game: Game? = null

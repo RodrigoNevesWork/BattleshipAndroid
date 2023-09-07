@@ -58,31 +58,6 @@ class LobbyViewModel(
             }
         }
 
-    fun getGameByPlayer(playerId: Int): Job =
-        viewModelScope.launch {
-            try {
-                gameService.getGameByPlayer(playerId).collect { event ->
-                    _gameId.value = event
-                    if(event.id != 0) _state = GameState.STARTED
-                }
-            } catch (e: Exception) {
-                if (e is ProblemJson) {
-                    when (e.status) {
-                        404 -> getGameByPlayer(playerId)
-                    }
-                    _error = e
-                }
-            }
-        }
-
-    fun forfeit(forfeitModel: ForfeitInputModel): Job =
-        viewModelScope.launch {
-            try {
-                gameService.forfeit(forfeitModel)
-            } catch (e: Exception) {
-                if (e is ProblemJson) _error = e
-            }
-        }
 
     init {
         EventBus.registerListener(this)

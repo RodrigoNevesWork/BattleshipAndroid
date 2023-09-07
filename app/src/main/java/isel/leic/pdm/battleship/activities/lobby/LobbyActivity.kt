@@ -44,11 +44,9 @@ class LobbyActivity: ComponentActivity() {
 
             LobbyScreen(
                 onBackRequested = { finish() },
-                onForfeitRequested = { viewModel.forfeit(ForfeitInputModel(currentLobby.id)) },
                 waitingForPlayer = viewModel.state == GameState.STARTING
             )
 
-            //CheckProblemJson(error = viewModel.error)
 
             if (viewModel.state == GameState.IDLE)
                 viewModel.matchmaker(GameInputModel(gameRule = GameRuleEncryptedSharedPreferences(this).gameRule))

@@ -10,6 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.lifecycleScope
 import isel.leic.pdm.battleship.DependenciesContainer
 import isel.leic.pdm.battleship.activities.lobby.GameState
+import isel.leic.pdm.battleship.activities.main.BattleshipActivity
 import isel.leic.pdm.battleship.domain.Game
 import isel.leic.pdm.battleship.preferences.UserCredentialsEncryptedSharedPreferences
 import isel.leic.pdm.battleship.utils.CheckProblemJson
@@ -49,7 +50,7 @@ class GameSetupActivity: ComponentActivity() {
                 game = GameSetupScreenState(currentGame.value),
                 onPlaceShips = { viewModel.placeShips(currentGame.value!!.id, it) },
                 onBackRequested = { finish() },
-                onTimeEnd = { }
+                onTimeEnd = { BattleshipActivity.navigate(this) }
             )
 
             if (viewModel.state.collectAsState().value == GameState.STARTED && currentGame.value?.state == Game.State.PLAYER_A_TURN) {

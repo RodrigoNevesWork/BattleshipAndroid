@@ -3,14 +3,15 @@ package isel.leic.pdm.battleship.activities.game
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.lifecycleScope
 import isel.leic.pdm.battleship.DependenciesContainer
+import isel.leic.pdm.battleship.activities.ranking.RankingActivity
 import isel.leic.pdm.battleship.domain.Game
-import isel.leic.pdm.battleship.http.model.ForfeitInputModel
 import isel.leic.pdm.battleship.preferences.UserCredentialsEncryptedSharedPreferences
 import isel.leic.pdm.battleship.utils.CheckProblemJson
 import isel.leic.pdm.battleship.utils.viewModelInit
@@ -57,8 +58,7 @@ class GameActivity: ComponentActivity() {
                 },
                 timeToShoot = viewModel.time.collectAsState().value,
                 onForfeitRequested = {
-                    viewModel.forfeit(ForfeitInputModel(if(userInfo.id == currentGame.value!!.playerA.userId) currentGame.value!!.playerA.id else currentGame.value!!.playerB.id))
-                    finish()
+                    viewModel.forfeit()
                 },
                 toEndActivity = {
                     GameEndActivity.navigate(context = this, isLocalPlayerVictory = it, playerId = if(userInfo.id == currentGame.value!!.playerA.userId) currentGame.value!!.playerA.id else currentGame.value!!.playerB.id)
@@ -71,15 +71,8 @@ class GameActivity: ComponentActivity() {
                 viewModel.getGame(setGameId)
 
             if (viewModel.time.collectAsState().value <= 0) {
-                GameEndActivity.navigate(
-                    context = this@GameActivity,
-                    isLocalPlayerVictory =
-                    (userInfo.id == currentGame.value!!.playerA.userId && currentGame.value?.state != Game.State.PLAYER_A_TURN)
-                            ||
-                    (userInfo.id == currentGame.value!!.playerB.userId && currentGame.value?.state != Game.State.PLAYER_B_TURN),
-                    playerId = if(userInfo.id == currentGame.value!!.playerA.userId) currentGame.value!!.playerA.id else currentGame.value!!.playerB.id
-                )
-                finish()
+                viewModel.forfeit()
+                Log.d("FORFEIT","TIME ENDED")
             }
 
         }

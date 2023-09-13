@@ -1,17 +1,13 @@
 package isel.leic.pdm.battleship
 
 import android.app.Application
-import android.util.Log
-import androidx.compose.ui.unit.Constraints
 import com.google.gson.Gson
 import isel.leic.pdm.battleship.services.GameService
 import isel.leic.pdm.battleship.services.GameServiceInterface
 import isel.leic.pdm.battleship.services.UserService
 import isel.leic.pdm.battleship.services.UserServiceInterface
 import isel.leic.pdm.battleship.services.sse.SseService
-import okhttp3.Cache
 import okhttp3.OkHttpClient
-import java.net.URL
 import java.util.concurrent.TimeUnit
 
 const val TAG = "BattleshipApp"
@@ -29,7 +25,9 @@ class BattleshipApplication: DependenciesContainer, Application() {
 
     private val httpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
-            .cache(Cache(directory = cacheDir, maxSize = 50 * 1024 * 1024))
+            .connectTimeout(0, TimeUnit.MINUTES)
+            .writeTimeout(0, TimeUnit.MINUTES)
+            .readTimeout(0, TimeUnit.MINUTES)
             .build()
     }
 

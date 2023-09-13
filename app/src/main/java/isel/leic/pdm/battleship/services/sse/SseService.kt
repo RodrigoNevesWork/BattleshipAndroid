@@ -61,7 +61,8 @@ class SseService(
 
         override fun onFailure(eventSource: EventSource, t: Throwable?, response: Response?) {
             super.onFailure(eventSource, t, response)
-            Log.d(TAG, "On Failure: ${response?.body}")
+            Log.d(TAG, "On Failure: ${response?.body?.contentType()}")
+            Log.d(TAG, "On Failure: ${t?.cause}")
         }
     }
 

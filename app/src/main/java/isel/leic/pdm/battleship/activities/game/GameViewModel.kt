@@ -26,7 +26,7 @@ class GameViewModel(
         EventBus.registerListener(this)
     }
     companion object {
-        private const val MAX_SHOOT_TIME = 20
+        private const val MAX_SHOOT_TIME = 120
         private const val ONE_SECOND_DELAY = 1000L
     }
 
@@ -42,9 +42,6 @@ class GameViewModel(
     val otherPlaced
         get() = _otherPlaced.asStateFlow()
 
-    private val _winner = MutableStateFlow<Int?>(null)
-    val winner
-        get() = _winner.asStateFlow()
 
     private val _timer = MutableStateFlow<Job?>(null)
     private val timer
@@ -98,7 +95,7 @@ class GameViewModel(
     /**
      * Decrements the timer to shoot
      */
-    fun decrementTimeToShoot(onFinish: () -> Unit = {} ) {
+    fun timeToShoot(onFinish: () -> Unit = {} ) {
         resetTimeToShoot()
         _timer.value = viewModelScope.launch {
             while (_time.value > 0) {
@@ -117,7 +114,7 @@ class GameViewModel(
         timer.value?.cancel()
     }
 
-    fun forfeit(): Job =
+    fun forfeit(){
         viewModelScope.launch {
             val onGoingGameValue = onGoingGame.value ?: return@launch
 
@@ -131,6 +128,8 @@ class GameViewModel(
                 _onGoingGame.value = it
             }
         }
+    }
+
 
 
     override fun onCleared() {
@@ -142,7 +141,7 @@ class GameViewModel(
         if (eventData is Game) {
             _onGoingGame.value = eventData
             _state.value = GameState.STARTED
-            decrementTimeToShoot()
+            timeToShoot()
         }
     }
 }

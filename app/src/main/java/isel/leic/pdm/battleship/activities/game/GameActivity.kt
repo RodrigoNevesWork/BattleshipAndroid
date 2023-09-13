@@ -10,7 +10,6 @@ import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.lifecycleScope
 import isel.leic.pdm.battleship.DependenciesContainer
-import isel.leic.pdm.battleship.activities.ranking.RankingActivity
 import isel.leic.pdm.battleship.domain.Game
 import isel.leic.pdm.battleship.preferences.UserCredentialsEncryptedSharedPreferences
 import isel.leic.pdm.battleship.utils.CheckProblemJson
@@ -42,7 +41,7 @@ class GameActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.decrementTimeToShoot()
+        viewModel.timeToShoot()
 
         setContent {
             val currentGame = viewModel.onGoingGame.collectAsState()
@@ -54,7 +53,7 @@ class GameActivity: ComponentActivity() {
                 onBackRequested = { finish() },
                 onShot = { gameId, shot ->
                     viewModel.shotShip(gameId = gameId, shot = shot)
-                    viewModel.decrementTimeToShoot()
+                    viewModel.timeToShoot()
                 },
                 timeToShoot = viewModel.time.collectAsState().value,
                 onForfeitRequested = {
